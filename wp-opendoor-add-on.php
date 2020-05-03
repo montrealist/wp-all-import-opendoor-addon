@@ -14,6 +14,8 @@ include "rapid-addon.php";
 
 $open_door_theme_addon = new RapidAddon('Open Door Theme Add-On', 'open_door_theme_addon');
 
+$open_door_theme_addon->add_field('address_value', 'Address', 'text', null, 'Address for the listing');
+
 $open_door_theme_addon->set_import_function('open_door_theme_addon_import');
 
 $theme_name = 'OpenDoor';
@@ -45,5 +47,12 @@ if (function_exists('is_plugin_active') && function_exists('get_option')) {
 function open_door_theme_addon_import($post_id, $data, $import_options) {
 
 	global $open_door_theme_addon;
+    // error_log('foobar updating address:');
+    // error_log(print_r($data, true));
+	if ($open_door_theme_addon->can_update_meta('address_value', $import_options)) {
+        update_post_meta($post_id, 'address_value', $data['address_value']);
+        $open_door_theme_addon->log( '- Adding address_value, post ID: ' . $post_id );
+	}
+
 
 }
