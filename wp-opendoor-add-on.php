@@ -32,10 +32,11 @@ if (function_exists('is_plugin_active') && function_exists('get_option')) {
 
 	// only run if WP All Import is active
 	if ( is_plugin_active('wp-all-import-pro/wp-all-import-pro.php') || is_plugin_active('wp-all-import/plugin.php') ) {
-		// only run this add-on if importing listings
+		// only run this add-on if importing listings into Open Door theme
 		$open_door_theme_addon->run(
             array(
                 "post_types" => array( "listing" ),
+                "themes" => array( "OpenDoor" ),
             )
         );
 	}
