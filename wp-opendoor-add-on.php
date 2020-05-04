@@ -154,9 +154,7 @@ function open_door_theme_addon_import($post_id, $data, $import_options) {
 	global $open_door_theme_addon;
 
     foreach ( $open_door_theme_addon->fields_text as $field ) {
-        error_log('foobar updating ' . $field->id);
         if ( $open_door_theme_addon->can_update_meta( $field->id, $import_options ) ) {
-            error_log('foobar can update ' . $field->id);
             update_post_meta($post_id, $field->id, $data[$field->id]);
             $open_door_theme_addon->log( '- Adding ' . $field->id . ', post ID: ' . $post_id );
 
