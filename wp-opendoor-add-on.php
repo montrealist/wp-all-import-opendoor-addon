@@ -14,7 +14,7 @@ include "rapid-addon.php";
 
 $open_door_theme_addon = new RapidAddon('Open Door Theme Add-On', 'open_door_theme_addon');
 
-$fields_text = array(
+$open_door_theme_addon->fields_text = array(
     (object) [
         'id' => 'price_value',
         'label' => 'Price (How much is this property?)'
@@ -110,7 +110,7 @@ $fields_text = array(
     ]
 );
 
-foreach ( $fields_text as $field ) {
+foreach ( $open_door_theme_addon->fields_text as $field ) {
     $open_door_theme_addon->add_field($field->id, $field->label, 'text', null, property_exists($field, 'hint') ? $field->hint : null);
 }
 
@@ -147,12 +147,16 @@ if (function_exists('is_plugin_active') && function_exists('get_option')) {
 function open_door_theme_addon_import($post_id, $data, $import_options) {
 
 	global $open_door_theme_addon;
-    // error_log('foobar updating address:');
-    // error_log(print_r($data, true));
-	if ($open_door_theme_addon->can_update_meta('address_value', $import_options)) {
-        update_post_meta($post_id, 'address_value', $data['address_value']);
-        $open_door_theme_addon->log( '- Adding address_value, post ID: ' . $post_id );
-	}
 
+    foreach ( $open_door_theme_addon->fields_text as $field ) {
+        error_log('foobar updating ' . $field->id);
+        if ( $open_door_theme_addon->can_update_meta( $field->id, $import_options ) ) {
+            error_log('foobar can update ' . $field->id);
+            update_post_meta($post_id, $field->id, $data[$field->id]);
+            $open_door_theme_addon->log( '- Adding ' . $field->id . ', post ID: ' . $post_id );
+
+        }
+
+    }
 
 }
