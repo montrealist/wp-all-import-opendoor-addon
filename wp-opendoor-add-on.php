@@ -33,6 +33,11 @@ $open_door_theme_addon->fields_text = array(
         'hint' => 'For example, 1223 Main Street. Note: This is for display, and Google Maps use only, NOT for use in the search.',
     ],
     (object) [
+        'id' => 'citystatezip_value',
+        'label' => 'City and State/Province (or similar for your area)',
+        'hint' => 'In one line. Note: This is for display, and Google Maps use only, NOT for use in the search.',
+    ],
+    (object) [
         'id' => 'mls_value',
         'label' => 'MLS number (required only if \'mlslisting_value\' is Yes)',
     ],
