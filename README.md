@@ -21,6 +21,27 @@ Simple add-on for importing listings into the Open Door WordPress theme.
 - Residential Lettings - Rent
 - Residential Sales - Buy
 
+## custom fields
+### address
+{house_number[1]} {street[1]}
+
+### city and state
+{town[1]}, {postcode[1]}, {postcode[1]}
+
+### bedrooms
+{bedrooms[1]}
+
+### bathrooms
+{bathrooms[1]}
+
+### date available
+{availableFrom[1]}
+
+### school district
+{district[1]}
+
+### google maps location
+{latitude[1]},{longitude[1]}
 
 ## Post content
 
@@ -41,6 +62,14 @@ Simple add-on for importing listings into the Open Door WordPress theme.
 
 [FOREACH({rooms/room})]
 [output_space_info({@name}, {./description[1]}, {./measurement_text[1]})]
+[ENDFOREACH]
+
+[FOREACH({rooms/room})]
+[output_fees({@name}, {./description[1]}, {./measurement_text[1]})]
+[ENDFOREACH]
+
+[FOREACH({rooms/room})]
+[output_directions({@name}, {./description[1]}, {./measurement_text[1]})]
 [ENDFOREACH]
 
 &nbsp;
@@ -66,6 +95,28 @@ function output_bullet($el) {
 		return "<li>" . $el . "</li>";
 	}
 }
+function output_directions($name, $desc, $measurement) {
+	$out = '';
+	if(!empty($desc) && $name == "Directions") {
+		$out .= "<h2>" . $name . "</h2>";
+		if(!empty($desc)) {
+			$out .= $desc . "<br/>";
+		}
+	}
+	return $out . "<br/>";
+}
+
+function output_fees($name, $desc, $measurement) {
+	$out = '';
+	if(!empty($desc) && $name == "Fees &amp; Charges") {
+		$out .= "<h2>" . $name . "</h2>";
+		if(!empty($desc)) {
+			$out .= $desc . "<br/>";
+		}
+	}
+	return $out . "<br/>";
+}
+
 function output_space_info($name, $desc, $measurement){
 	$out = '';
 	if($name != 'Directions') {
@@ -78,8 +129,6 @@ function output_space_info($name, $desc, $measurement){
 		}
 	}
 	return $out . "<br/>";
-	// error_log('foobar test:' . $name . ' - ' . $desc . ' - ' . $measurement);
-	// error_log(print_r($element ,true));
 }
 function output_floor_plan($element) {
 	if(!empty($element)) {
