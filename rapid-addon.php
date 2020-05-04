@@ -124,15 +124,11 @@ if (!class_exists('RapidAddon')) {
 		*
 		*/
 		function run($conditions = array()) {
-			error_log('foobar got conditions:');
-			error_log( print_r($conditions, true) );
 			if (empty($conditions)) {
 				$this->when_to_run = "always";
 			}
 
 			@$this->active_post_types = ( ! empty($conditions['post_types'])) ? $conditions['post_types'] : array();
-			error_log('foobar active post types:');
-			error_log( print_r(@$this->active_post_types, true) );
 
 			@$this->active_themes = ( ! empty($conditions['themes'])) ? $conditions['themes'] : array();
 			@$this->active_plugins = ( ! empty($conditions['plugins'])) ? $conditions['plugins'] : array();			
